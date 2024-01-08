@@ -8,13 +8,10 @@ import org.typelevel.log4cats.SelfAwareStructuredLogger
 import org.typelevel.log4cats.slf4j.Slf4jLogger
 
 import scala.util.Random
-//import cats.effect.std.Queue
 import cats.effect.{IO, IOApp, Sync}
-//import cats.syntax.all._
 import disneystreaming.Main.Data.{andrewGarfield, benFisher, ezraMiller, galGodot, henryCavil, jasonMomoa, rayHardy, tobeyMaguire, tomHolland}
 import fs2.{Chunk, Pure, Stream}
 import scala.concurrent.duration._
-//import fs2.{Chunk, INothing, Pipe, Pull, Pure, Stream}
 
 object Main extends IOApp.Simple {
 
@@ -40,9 +37,9 @@ object Main extends IOApp.Simple {
     val markRuffalo: Actor       = Actor(9, "Mark", "Ruffalo")
     val chrisHemsworth: Actor    = Actor(10, "Chris", "Hemsworth")
     val jeremyRenner: Actor      = Actor(11, "Jeremy", "Renner")
-    val tomHolland: Actor        = Actor(13, "Tom", "Holland")
-    val tobeyMaguire: Actor      = Actor(14, "Tobey", "Maguire")
-    val andrewGarfield: Actor    = Actor(15, "Andrew", "Garfield")
+    val tomHolland: Actor        = Actor(12, "Tom", "Holland")
+    val tobeyMaguire: Actor      = Actor(13, "Tobey", "Maguire")
+    val andrewGarfield: Actor    = Actor(14, "Andrew", "Garfield")
   }
 
   //streams
@@ -89,16 +86,7 @@ object Main extends IOApp.Simple {
 
   val compiledStream: IO[Unit] = savingTomHolland.compile.drain
 
-//  //chunks
-//  val avengersActors :Stream[Pure, Actor] = Stream.chunk(Chunk.array(Array(
-//    scarlettJohansson,
-//    robertDowneyJr,
-//    chrisEvans,
-//    markRuffalo,
-//    chrisHemsworth,
-//    jeremyRenner,
-//  )))
-
+//chunks
   val avengersActors: Stream[Pure, Actor] = Stream.chunk(
     Chunk.array(
       Array(
