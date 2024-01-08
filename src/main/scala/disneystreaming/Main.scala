@@ -9,7 +9,7 @@ import org.typelevel.log4cats.slf4j.Slf4jLogger
 
 import scala.util.Random
 import cats.effect.{IO, IOApp, Sync}
-import disneystreaming.Main.Data.{andrewGarfield, benFisher, ezraMiller, galGodot, henryCavil, jasonMomoa, rayHardy, tobeyMaguire, tomHolland}
+import disneystreaming.Main.Data.{andrewGarfield, benFisher, ezraMiller, galGadot, henryCavil, jasonMomoa, rayHardy, tobeyMaguire, tomHolland}
 import fs2.{Chunk, Pure, Stream}
 import scala.concurrent.duration._
 
@@ -24,7 +24,7 @@ object Main extends IOApp.Simple {
   object Data {
     // Justice League
     val henryCavil: Actor = Actor(0, "Henry", "Cavill")
-    val galGodot: Actor   = Actor(1, "Gal", "Godot")
+    val galGadot: Actor   = Actor(1, "Gal", "Gadot")
     val ezraMiller: Actor = Actor(2, "Ezra", "Miller")
     val benFisher: Actor  = Actor(3, "Ben", "Fisher")
     val rayHardy: Actor   = Actor(4, "Ray", "Hardy")
@@ -58,7 +58,7 @@ object Main extends IOApp.Simple {
 
   val jlActors: Stream[Pure, Actor] = Stream(
     henryCavil,
-    galGodot,
+    galGadot,
     ezraMiller,
     benFisher,
     rayHardy,
@@ -193,13 +193,17 @@ object Main extends IOApp.Simple {
     producer.concurrently(consumer)
   }
 
-  override def run: IO[Unit] =
-    //    compiledStream
+  override def run: IO[Unit] = {
+//    IO(repeatedJLActorsList).debug.void
+//        compiledStreams
+//    printedJLActors_v2.compile.drain
+//    printedJLActors_v3.compile.drain
 //    stringNamesPrinted.compile.drain
 //    errorHandledActors.compile.drain
 //    attemptedProcessed.compile.drain
 //    managedJLActors.compile.drain
 //    mergedActors.compile.drain
     concurrentSystem.compile.drain
+  }
 
 }
