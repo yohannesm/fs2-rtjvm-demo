@@ -137,8 +137,16 @@ object Main extends IOApp.Simple {
     })
   )
 
+  val continuousErrorHandledActors: Stream[IO, Int] = savedJLActors.handleErrorWith(error =>
+    Stream.eval(IO {
+      println(s"Error occurred: $error")
+    }) >> continuousErrorHandledActors
+  )
+
+
+
   val attemptedSavedJLActors: Stream[IO, Either[Throwable, Int]] = savedJLActors.attempt
-  val attemptedProcessed = attemptedSavedJLActors.evalMap {
+  val attemptedProcessed: Stream[IO, String] = attemptedSavedJLActors.evalMap {
     case Left(error)  => IO(s"Error: $error").debug
     case Right(value) => IO(s"Successfully processed actor id: $value").debug
   }
@@ -199,11 +207,11 @@ object Main extends IOApp.Simple {
 //    printedJLActors_v2.compile.drain
 //    printedJLActors_v3.compile.drain
 //    stringNamesPrinted.compile.drain
-//    errorHandledActors.compile.drain
+    errorHandledActors.compile.drain
 //    attemptedProcessed.compile.drain
 //    managedJLActors.compile.drain
 //    mergedActors.compile.drain
-    concurrentSystem.compile.drain
+//    concurrentSystem.compile.drain
   }
 
 }
